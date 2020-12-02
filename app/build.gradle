@@ -19,5 +19,6 @@ android {
 }
 
 dependencies {
-    api 'com.j256.ormlite:ormlite-android:4.24'
+    implementation 'com.j256.ormlite:ormlite-android:4.24'
+    implementation 'pub.devrel:easypermissions:3.0.0'
 }

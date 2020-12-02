@@ -895,7 +895,6 @@ public class SSHTunnelService extends Service implements ServerHostKeyVerifier,
 		return true;
 	}
 
-	@TargetApi(Build.VERSION_CODES.O)
 	private void notifyAlert(String title, String info) {
 		notification = new Notification.Builder(this, getString(R.string.app_name)
 				+ " | " + Utils.getProfileName(profile))
@@ -911,7 +910,6 @@ public class SSHTunnelService extends Service implements ServerHostKeyVerifier,
 		startForegroundCompat(1, notification);
 	}
 
-	@TargetApi(Build.VERSION_CODES.O)
 	private void notifyAlert(String title, String info, int flags) {
 		notification = new Notification.Builder(this, getString(R.string.app_name)
 				+ " | " + Utils.getProfileName(profile))

@@ -13,8 +13,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  *                            ___====-_  _-====___
  *                      _--^^^#####//      \\#####^^^--_
  *                   _-^##########// (    ) \\##########^-_
@@ -51,6 +51,7 @@ import org.sshtunnel.db.ProfileFactory;
 import org.sshtunnel.utils.Constraints;
 import org.sshtunnel.utils.Utils;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -61,6 +62,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
@@ -87,7 +89,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 //import com.flurry.android.FlurryAgent;
+import androidx.core.app.ActivityCompat;
+
 import com.ksmaze.android.preference.ListPreferenceMultiSelect;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class SSHTunnel extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
@@ -187,11 +193,11 @@ public class SSHTunnel extends PreferenceActivity implements
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MSG_UPDATE_FINISHED:
-				Toast.makeText(SSHTunnel.this,
-						getString(R.string.update_finished), Toast.LENGTH_LONG)
-						.show();
-				break;
+				case MSG_UPDATE_FINISHED:
+					Toast.makeText(SSHTunnel.this,
+							getString(R.string.update_finished), Toast.LENGTH_LONG)
+							.show();
+					break;
 			}
 			super.handleMessage(msg);
 		}
@@ -361,6 +367,10 @@ public class SSHTunnel extends PreferenceActivity implements
 	private void loadNetworkList() {
 		WifiManager wm = (WifiManager) this
 				.getSystemService(Context.WIFI_SERVICE);
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			EasyPermissions.requestPermissions(this,Manifest.permission.ACCESS_FINE_LOCATION,1);
+			return;
+		}
 		List<WifiConfiguration> wcs = wm.getConfiguredNetworks();
 		String[] ssidEntries = new String[wcs.size() + 3];
 		ssidEntries[0] = Constraints.WIFI_AND_3G;
