@@ -90,6 +90,8 @@ import android.widget.Toast;
 
 //import com.flurry.android.FlurryAgent;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.ksmaze.android.preference.ListPreferenceMultiSelect;
 
@@ -97,7 +99,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class SSHTunnel extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
-
+	public static MutableLiveData<SSHTunnel> contextLiveData= new MutableLiveData<>();
 	private static final String TAG = "SSHTunnel";
 
 	public static boolean runCommand(String command) {
@@ -130,6 +132,10 @@ public class SSHTunnel extends PreferenceActivity implements
 			process.waitFor();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
+			Context context = contextLiveData.getValue();
+			if(context !=null){
+				Toast.makeText(context,"no root permission(127)",Toast.LENGTH_SHORT).show();
+			}
 			return false;
 		} finally {
 			try {
@@ -276,6 +282,10 @@ public class SSHTunnel extends PreferenceActivity implements
 				return false;
 			proc.destroy();
 		} catch (Exception e) {
+			Context context = contextLiveData.getValue();
+			if(context !=null){
+				Toast.makeText(context,"no root permission(287)",Toast.LENGTH_SHORT).show();
+			}
 			return false;
 		}
 		return true;
@@ -411,7 +421,7 @@ public class SSHTunnel extends PreferenceActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		contextLiveData.postValue(this);
 		addPreferencesFromResource(R.xml.main_pre);
 
 		hostText = (EditTextPreference) findPreference("host");

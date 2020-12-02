@@ -91,6 +91,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import com.flurry.android.FlurryAgent;
 import com.trilead.ssh2.Connection;
@@ -200,6 +201,12 @@ public class SSHTunnelService extends Service implements ServerHostKeyVerifier,
 			process.waitFor();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
+			SSHTunnel context = SSHTunnel.contextLiveData.getValue();
+			if(context !=null){
+				context.handler.post(()->{
+					Toast.makeText(context.getApplicationContext(),"no root permission(837)",Toast.LENGTH_SHORT).show();
+				});
+			}
 			return false;
 		} finally {
 			try {
@@ -827,6 +834,12 @@ public class SSHTunnelService extends Service implements ServerHostKeyVerifier,
 			}
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
+			SSHTunnel context = SSHTunnel.contextLiveData.getValue();
+			if(context !=null){
+				context.handler.post(()->{
+					Toast.makeText(context.getApplicationContext(),"no root permission(837)",Toast.LENGTH_SHORT).show();
+				});
+			}
 		} finally {
 			try {
 				if (os != null) {
