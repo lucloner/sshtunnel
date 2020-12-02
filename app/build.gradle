@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Lucloner\\OneDrive\\文档\\biggee_sign_pass12345678.jks')
+            storePassword '12345678'
+            keyAlias 'key0'
+            keyPassword '12345678'
+        }
+    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -12,8 +21,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -23,6 +32,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.j256.ormlite:ormlite-android:4.24'
+    implementation 'com.j256.ormlite:ormlite-android:5.2'
     implementation 'pub.devrel:easypermissions:3.0.0'
 }
