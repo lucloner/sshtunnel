@@ -92,7 +92,7 @@ import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-import com.flurry.android.FlurryAgent;
+//import com.flurry.android.FlurryAgent;
 import com.trilead.ssh2.Connection;
 import com.trilead.ssh2.ConnectionMonitor;
 import com.trilead.ssh2.DynamicPortForwarder;
@@ -969,7 +969,7 @@ public class SSHTunnelService extends Service implements ServerHostKeyVerifier,
 
 		stopForegroundCompat(1);
 
-		FlurryAgent.onEndSession(this);
+//		FlurryAgent.onEndSession(this);
 
 		if (connected) {
 
@@ -1053,7 +1053,7 @@ public class SSHTunnelService extends Service implements ServerHostKeyVerifier,
 
 		super.onStart(intent, startId);
 
-		FlurryAgent.onStartSession(this, "MBY4JL18FQK1DPEJ5Y39");
+//		FlurryAgent.onStartSession(this, "MBY4JL18FQK1DPEJ5Y39");
 
 		Log.d(TAG, "Service Start");
 
